@@ -2,6 +2,7 @@ package com.example.restfulwebservices.controller;
 
 import com.example.restfulwebservices.model.User;
 import com.example.restfulwebservices.service.UserDaoService;
+import com.example.restfulwebservices.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +41,18 @@ public class UserResource {
 
     @GetMapping("/{id}")
     public User retrieveUser(@PathVariable int id){
-        return service.findOne(id);
+        User user = service.findOne(id);
+        if(user==null){
+            throw new UserNotFoundException("id-"+id);
+        }
+        return user;
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable int id){
+        User user = service.deleteById(id);
+        if(user==null){
+            throw new UserNotFoundException("id-"+id);
+        }
     }
 }
