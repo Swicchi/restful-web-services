@@ -23,12 +23,14 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
         new ExceptionResponse(new Date(),ex.getMessage(),request.getDescription(false));
         return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
     @ExceptionHandler(UserNotFoundException.class)
     public final ResponseEntity<ExceptionResponse> handleUserNotFoundException (UserNotFoundException ex, WebRequest request){
         ExceptionResponse exceptionResponse=
         new ExceptionResponse(new Date(),ex.getMessage(),request.getDescription(false));
         return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
     }
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                  HttpHeaders headers, HttpStatus status,WebRequest request){
